@@ -1,0 +1,20 @@
+body {
+    display: flex;
+    flex-direction: column;
+    gap: 64px;
+    padding-right: 64px;
+}
+
+.pdf-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-size: x-large;
+}
+
+.pdf {
+    width: 100%;
+    height: 1000px;
+}
