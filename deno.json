@@ -1,6 +1,6 @@
 {
   "tasks": {
-    "dev": "deno run --allow-net --allow-read main.ts",
+    "dev": "deno run --watch --allow-net --allow-read main.ts",
     "build:linux": "deno compile --target x86_64-unknown-linux-gnu --allow-net --allow-read --output start main.ts",
     "build:windows": "deno compile --target x86_64-pc-windows-msvc --allow-net --allow-read --output start.exe main.ts"
   },
