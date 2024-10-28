@@ -34,6 +34,11 @@ async function readDirectories(
 
 const router = new Router();
 
+router.get("/", (context, next) => {
+    context.response.redirect("/src/templates/index.html");
+    return next();
+});
+
 router.get("/api/tree", async (context, next) => {
     const contentDirectory = path.join(Deno.cwd(), "content");
     const response: Directory[] = [];
@@ -67,7 +72,7 @@ app.use(router.allowedMethods());
 console.log("PDFs amostradinhos já está de pé");
 console.log();
 console.log(
-    "Clique no link e comece a utilizar http://localhost:4200/src/templates/index.html",
+    "Clique no link e comece a utilizar http://localhost:4200",
 );
 console.log(
     "Nâo consegue clicar no link? Selecione todo o link e copie com CTRL + SHIFT + C",

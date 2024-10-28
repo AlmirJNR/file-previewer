@@ -14,8 +14,8 @@ deno run dev
 
 ### Use
 
-[Click me](http://localhost:4200/src/templates/index.html) or manually go
-to http://localhost:4200/src/templates/index.html to start using the application
+[Click me](http://localhost:4200) or manually go
+to http://localhost:4200 to start using the application
 
 ### Build and run in production mode
 
