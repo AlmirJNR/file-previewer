@@ -9,6 +9,7 @@ type Directory = {
 async function readDirectories(
     rootDir: string,
     response: Directory[],
+    // Seams to also define the amount of directories listed, should be fixed in a better way later
     maxDepth = 5,
 ) {
     for await (const content of Deno.readDir(rootDir)) {
@@ -42,7 +43,14 @@ router.get("/", (context, next) => {
 router.get("/api/tree", async (context, next) => {
     const contentDirectory = path.join(Deno.cwd(), "content");
     const response: Directory[] = [];
-    await readDirectories(contentDirectory, response);
+
+    let totalRootDirectories = 0;
+    for await (const content of Deno.readDir(contentDirectory)) {
+        if (content.isDirectory) {
+            totalRootDirectories += 1;
+        }
+    }
+    await readDirectories(contentDirectory, response, totalRootDirectories);
 
     context.response.body = response;
     return next();
