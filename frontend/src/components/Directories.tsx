@@ -1,26 +1,14 @@
-import {useEffect, useState} from 'react'
+import {use} from 'react'
 import {IDirectory} from "@/types/directory";
-import {buildFileSystemHub} from "@/services/fileSystemHubService.ts";
-import {getDirectories} from "@/services/directoriesService.ts";
-import {localSetItem} from "@/services/storeService.ts";
 import {FaFolder, FaFolderOpen} from "react-icons/fa6";
 import {Link} from "react-router";
-import Loading from "@/components/Loading.tsx";
-import {HubConnectionState} from "@microsoft/signalr";
+import {DirectoriesContext} from "@/contexts/directoriesContext.ts";
 
 export default function Directories() {
-    const [isLoading, setIsLoading] = useState(false);
-    const [directories, setDirectories] = useState<IDirectory[]>([]);
-
-    const fileSystemHub = buildFileSystemHub();
-    fileSystemHub.on("Changed", async () => {
-        const directories = await getDirectories();
-        localSetItem('directories', directories);
-        setDirectories(directories);
-    });
+    const directoriesContext = use(DirectoriesContext);
 
     function countParent(directory: IDirectory, count = 0) {
-        const parentDirectory = directories.find(x => x.id === directory.parentId);
+        const parentDirectory = directoriesContext?.directories.find(x => x.id === directory.parentId);
         if (!parentDirectory) {
             return count;
         }
@@ -29,43 +17,12 @@ export default function Directories() {
     }
 
     function isParent(directory: IDirectory) {
-        return directories.some(x => x.parentId === directory.id);
-    }
-
-    useEffect(() => {
-        setIsLoading(true);
-
-        const startFileSystemHub = fileSystemHub.state === HubConnectionState.Disconnected
-            ? fileSystemHub.start()
-            : Promise.resolve();
-
-        Promise.all([startFileSystemHub, getDirectories()])
-            // eslint-disable-next-line @typescript-eslint/no-unused-vars
-            .then(([_, directories]) => {
-                localSetItem('directories', directories);
-                setDirectories(directories);
-            })
-            .catch((err: unknown) => {
-                console.error(err);
-            })
-            .finally(() => {
-                setIsLoading(false);
-            });
-
-        return () => {
-            if (fileSystemHub.state !== HubConnectionState.Connecting && fileSystemHub.state !== HubConnectionState.Reconnecting) {
-                void fileSystemHub.stop();
-            }
-        };
-    }, []);
-
-    if (isLoading) {
-        return <Loading/>
+        return directoriesContext?.directories.some(x => x.parentId === directory.id) ?? false;
     }
 
     return (
         <ul className="space-y-2">
-            {directories.map((directory: IDirectory) => {
+            {directoriesContext?.directories.map((directory: IDirectory) => {
                 const padding = countParent(directory);
                 const paddingString = (padding * 2).toString();
 
