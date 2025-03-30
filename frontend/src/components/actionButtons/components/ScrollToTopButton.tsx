@@ -8,7 +8,7 @@ export default function ScrollToTopButton() {
     return (
         <button type="button"
                 onClick={handleClick}
-                className="fixed bottom-10 right-4 bg-cyan-800 rounded-full p-2 group hover:bg-white hover:cursor-pointer">
+                className="bg-cyan-800 rounded-full p-2 group hover:bg-white hover:cursor-pointer">
             <FaArrowUp className="fill-white group-hover:fill-cyan-800"/>
         </button>
     );

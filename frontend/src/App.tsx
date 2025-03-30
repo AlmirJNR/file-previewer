@@ -1,8 +1,7 @@
 import {useEffect, useState} from "react";
 import {sessionGetItem, sessionSetItem} from "@/services/storeService.ts";
 import {Outlet} from "react-router";
-import ScrollToTopButton from "@/components/ScrollToTopButton.tsx";
-import HomeButton from "@/components/HomeButton.tsx";
+import ActionButtons from "@/components/actionButtons";
 
 export default function App() {
     const [title, setTitle] = useState('');
@@ -40,8 +39,7 @@ export default function App() {
                 <Outlet/>
             </main>
 
-            <ScrollToTopButton/>
-            <HomeButton/>
+            <ActionButtons/>
         </div>
     );
 }
