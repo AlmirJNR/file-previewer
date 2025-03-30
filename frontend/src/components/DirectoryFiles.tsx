@@ -11,7 +11,7 @@ export default function DirectoryFiles() {
     const directories = localGetItem<IDirectory[]>('directories');
     if (!directories || directories.length === 0) {
         return (
-            <Link to="/" className="hover:underline">
+            <Link to="/" className="flex items-center justify-center hover:underline">
                 <Warning text="não existem diretórios"/>
             </Link>
         );
@@ -20,7 +20,7 @@ export default function DirectoryFiles() {
     const directory = directories.find(x => x.id === directoryId);
     if (!directory) {
         return (
-            <Link to="/" className="hover:underline">
+            <Link to="/" className="flex items-center justify-center hover:underline">
                 <Warning text="diretório não encontrado"/>
             </Link>
         );
