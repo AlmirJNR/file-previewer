@@ -1,4 +1,4 @@
-import {Link, useParams} from "react-router";
+import {Link, useNavigate, useParams} from "react-router";
 import {IDirectory} from "@/types/directory";
 import {getFile} from "@/services/fileService.ts";
 import {Fragment, use, useEffect, useState} from "react";
@@ -9,6 +9,7 @@ export default function DirectoryFiles() {
     const {directoryId} = useParams();
     const [hasDirectories, setHasDirectories] = useState<boolean>(false);
     const [directory, setDirectory] = useState<IDirectory | null>(null);
+    const navigate = useNavigate();
 
     const directoriesContext = use(DirectoriesContext);
 
@@ -19,10 +20,13 @@ export default function DirectoryFiles() {
         }
 
         const directory = directories?.find(x => x.id === directoryId);
-        if (directory) {
-            setDirectory(directory);
+        if (!directory?.hasFiles) {
+            void navigate('/', {replace: true});
+            return;
         }
-    }, [directoryId, directoriesContext?.directories]);
+
+        setDirectory(directory);
+    }, [directoryId, directoriesContext?.directories, navigate]);
 
     if (!hasDirectories) {
         return (
