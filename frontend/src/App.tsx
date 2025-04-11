@@ -80,13 +80,13 @@ export default function App() {
                 />
             </header>
 
-            <main>
-                <DirectoriesContext value={directoriesContextValue}>
+            <DirectoriesContext value={directoriesContextValue}>
+                <main>
                     {isLoading ? <Loading/> : <Outlet/>}
-                </DirectoriesContext>
-            </main>
+                </main>
 
-            <ActionButtons/>
+                <ActionButtons/>
+            </DirectoriesContext>
         </div>
     );
 }
