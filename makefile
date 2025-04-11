@@ -13,7 +13,7 @@ OUTPUT_WINDOWS = ../$(R_WINDOWS)
 all: build_frontend build_backend compact remove_build_artifacts move_to_release
 
 build_frontend:
-	(cd $(FRONTEND_DIR) && npm run build)
+	(cd $(FRONTEND_DIR) && npm i && npm run build)
 
 build_backend_linux:
 	(cd $(BACKEND_DIR) && dotnet publish $(CSPROJ) $(PUBLISH_FLAGS) -r $(R_LINUX) -o $(OUTPUT_LINUX))
