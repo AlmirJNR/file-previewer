@@ -22,7 +22,7 @@ build_backend_windows:
 build_backend: build_backend_linux build_backend_windows
 
 remove_compact_artifacts:
-	rm -r ./release
+	rm -rf ./release
 compact_linux:
 	(cd ./$(R_LINUX) && tar -zcvf $(OUTPUT_LINUX).tar.gz *)
 compact_windows:
