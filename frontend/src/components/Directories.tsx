@@ -1,14 +1,13 @@
-import {use} from 'react'
 import {IDirectory} from "@/types/directory";
 import {FaFolder, FaFolderOpen} from "react-icons/fa6";
 import {Link} from "react-router";
-import {DirectoriesContext} from "@/contexts/directoriesContext.ts";
+import {useDirectories} from "@/contexts/directoriesContext.ts";
 
 export default function Directories() {
-    const directoriesContext = use(DirectoriesContext);
+    const {directories} = useDirectories();
 
     function countParent(directory: IDirectory, count = 0) {
-        const parentDirectory = directoriesContext?.directories.find(x => x.id === directory.parentId);
+        const parentDirectory = directories.find(x => x.id === directory.parentId);
         if (!parentDirectory) {
             return count;
         }
@@ -17,12 +16,12 @@ export default function Directories() {
     }
 
     function isParent(directory: IDirectory) {
-        return directoriesContext?.directories.some(x => x.parentId === directory.id) ?? false;
+        return directories.some(x => x.parentId === directory.id);
     }
 
     return (
         <ul className="space-y-2">
-            {directoriesContext?.directories.map((directory: IDirectory) => {
+            {directories.map((directory: IDirectory) => {
                 const padding = countParent(directory);
                 const paddingString = (padding * 2).toString();
 
