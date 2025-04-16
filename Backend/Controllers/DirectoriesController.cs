@@ -42,11 +42,12 @@ public class DirectoriesController : ControllerBase
                 });
             }
 
-            var isContentDirectory = directory == _directoryService.ContentDirectory;
+            var parentPath = directoryInfo.Parent?.FullName;
+            var parentIsContentDirectory = parentPath == _directoryService.ContentDirectory;
             response.Add(new DirectoriesResponseDto
             {
                 Id = directory,
-                ParentId = isContentDirectory ? null : directoryInfo.Parent?.FullName,
+                ParentId = parentIsContentDirectory ? null : parentPath,
                 Name = directoryName,
                 HasFiles = pdfFiles.Count != 0,
                 PdfFiles = pdfFiles.ToArray()

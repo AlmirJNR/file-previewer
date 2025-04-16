@@ -16,9 +16,6 @@ public class DirectoryService
 
     public string[] GetContentDirectories()
     {
-        var contentDirectories = Directory.GetDirectories(ContentDirectory, "*", SearchOption.AllDirectories);
-        return contentDirectories.Append(ContentDirectory)
-            .OrderBy(x => x.Length)
-            .ToArray();
+        return Directory.GetDirectories(ContentDirectory, "*", SearchOption.AllDirectories);
     }
 }
