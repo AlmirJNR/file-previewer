@@ -16,6 +16,10 @@ public class DirectoryService
 
     public string[] GetContentDirectories()
     {
-        return Directory.GetDirectories(ContentDirectory, "*", SearchOption.AllDirectories);
+        return
+        [
+            ContentDirectory,
+            ..Directory.GetDirectories(ContentDirectory, "*", SearchOption.AllDirectories)
+        ];
     }
 }

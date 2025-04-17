@@ -22,6 +22,10 @@ export default function Directories() {
     return (
         <ul className="space-y-2">
             {directories.map((directory: IDirectory) => {
+                if (!directory.isVisible) {
+                    return null;
+                }
+
                 const padding = countParent(directory);
                 const paddingString = (padding * 2).toString();
 

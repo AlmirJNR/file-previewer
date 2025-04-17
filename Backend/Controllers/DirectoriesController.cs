@@ -42,13 +42,16 @@ public class DirectoriesController : ControllerBase
                 });
             }
 
+            var directoryIsContentDirectory = directory == _directoryService.ContentDirectory;
             var parentPath = directoryInfo.Parent?.FullName;
             var parentIsContentDirectory = parentPath == _directoryService.ContentDirectory;
+            var shouldHideParentId = directoryIsContentDirectory || parentIsContentDirectory;
             response.Add(new DirectoriesResponseDto
             {
                 Id = directory,
-                ParentId = parentIsContentDirectory ? null : parentPath,
+                ParentId = shouldHideParentId ? null : parentPath,
                 Name = directoryName,
+                IsVisible = !directoryIsContentDirectory,
                 HasFiles = pdfFiles.Count != 0,
                 PdfFiles = pdfFiles.ToArray()
             });
