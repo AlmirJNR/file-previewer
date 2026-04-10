@@ -1,6 +1,7 @@
 import {IDirectory} from "@/types/directory";
 import {useDirectoriesContext} from "@/hooks/useDirectoriesContext.ts";
 import Directory from "@/components/Directory.tsx";
+import Warning from "@/components/Warning.tsx";
 
 export default function Directories() {
     const {directories} = useDirectoriesContext();
@@ -12,6 +13,10 @@ export default function Directories() {
         }
 
         return countParent(parentDirectory, count + 1);
+    }
+
+    if (directories.length <= 1 && countParent(directories[0]) === 0) {
+        return <Warning text="Não existem arquivos no diretório"/>;
     }
 
     return (

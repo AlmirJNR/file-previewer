@@ -5,13 +5,11 @@ interface IWarningProps {
 }
 
 export default function Warning({text}: IWarningProps) {
-    const warningElement = <FaTriangleExclamation className="fill-yellow-400"/>;
-
     return (
-        <div className="flex items-center space-x-2">
-            {warningElement}
+        <div className="flex items-center justify-center space-x-2">
+            <FaTriangleExclamation className="fill-yellow-400"/>
             <span>{text}</span>
-            {warningElement}
+            <FaTriangleExclamation className="fill-yellow-400"/>
         </div>
     );
 }
