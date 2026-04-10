@@ -1,31 +1,18 @@
-import {use, useEffect, useMemo, useState} from "react";
-import {Outlet} from "react-router";
-import ActionButtons from "@/components/actionButtons";
-import {IDirectoriesContext, DirectoriesContext} from "@/contexts/directoriesContext.ts";
+import {PropsWithChildren, useEffect,  useState} from "react";
+import ActionButtons from "@/components/actionButtons/ActionButtons.tsx";
 import Loading from "@/components/Loading.tsx";
 import {HubConnectionState} from "@microsoft/signalr";
 import {getDirectories} from "@/services/directoriesService.ts";
-import {IDirectory} from "@/types/directory";
-import {sessionGetItem, sessionSetItem} from "@/services/storeService.ts";
-import {FileSystemHubContext} from "@/contexts/fileSystemHubContext.ts";
+import {useFileSystemHubContext} from "@/hooks/useFileSystemHubContext.ts";
+import {useDirectoriesContext} from "@/hooks/useDirectoriesContext.ts";
 
-export default function App() {
-    const {fileSystemHub} = use(FileSystemHubContext);
-    const [title, setTitle] = useState('');
+export default function App({children}: PropsWithChildren) {
+    const fileSystemHub = useFileSystemHubContext();
+    const {setDirectories} = useDirectoriesContext();
+
     const [isLoading, setIsLoading] = useState(false);
-    const [directories, setDirectories] = useState<IDirectory[]>([]);
-
-    const directoriesContextValue = useMemo<IDirectoriesContext>(() => {
-        return {
-            directories: directories,
-            setDirectories: setDirectories
-        }
-    }, [directories]);
 
     useEffect(() => {
-        const title = sessionGetItem<string>('title');
-        setTitle(title ?? '');
-
         fileSystemHub.on("Changed", async () => {
             const directories = await getDirectories();
             setDirectories(directories);
@@ -38,8 +25,7 @@ export default function App() {
             : Promise.resolve();
 
         Promise.all([startFileSystemHub, getDirectories()])
-            // eslint-disable-next-line @typescript-eslint/no-unused-vars
-            .then(([_, directories]) => {
+            .then(([, directories]) => {
                 setDirectories(directories);
             })
             .catch((err: unknown) => {
@@ -54,39 +40,15 @@ export default function App() {
                 void fileSystemHub.stop();
             }
         };
-    }, [fileSystemHub]);
+    }, [fileSystemHub, setDirectories]);
 
     return (
         <div className="m-4 p-4 rounded shadow-lg shadow-gray-200 space-y-4">
-            <header>
-                <input
-                    type="text"
-                    placeholder="insira um título"
-                    value={title}
-                    onChange={(e) => {
-                        const value = e.target.value;
-                        sessionSetItem('title', value);
-                        setTitle(value);
-                    }}
-                    onKeyUp={(e) => {
-                        if (e.key !== 'Enter') {
-                            return;
-                        }
+            <main>
+                {isLoading ? <Loading/> : children}
+            </main>
 
-                        const target = e.target as HTMLInputElement;
-                        target.blur();
-                    }}
-                    className="w-full text-center text-xl uppercase hover:outline-2 focus:outline-2 outline-cyan-800 rounded"
-                />
-            </header>
-
-            <DirectoriesContext value={directoriesContextValue}>
-                <main>
-                    {isLoading ? <Loading/> : <Outlet/>}
-                </main>
-
-                <ActionButtons/>
-            </DirectoriesContext>
+            <ActionButtons/>
         </div>
     );
 }
