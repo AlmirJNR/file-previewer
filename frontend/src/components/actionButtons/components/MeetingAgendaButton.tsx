@@ -1,14 +1,19 @@
 import {FaFilePdf} from "react-icons/fa6";
 import {useFile} from "@/hooks/useFile.ts";
 import {getFile} from "@/services/fileService.ts";
-import {useDirectoriesContext} from "@/hooks/useDirectoriesContext.ts";
+import {useDirectoryTreeContext} from "@/hooks/useDirectoryTreeContext.ts";
+import {findDirectoryByName} from "@/utils/findDirectoryByName.ts";
 
 export default function MeetingAgendaButton() {
-    const {directories} = useDirectoriesContext();
+    const {directoryTree} = useDirectoryTreeContext();
     const {embedRef, requestFullscreen} = useFile();
 
-    const directory = directories.find(x => x.name.endsWith('Content'));
-    const file = directory?.pdfFiles.find(x => x.name.trim().toLowerCase() === 'pauta.pdf');
+    if (!directoryTree) {
+        return null;
+    }
+
+    const directory = findDirectoryByName(directoryTree, 'Content');
+    const file = directory?.directory.pdfFiles.find(x => x.name.trim().toLowerCase() === 'pauta.pdf');
     if (!directory || !file) {
         return null;
     }

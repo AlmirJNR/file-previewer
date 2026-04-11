@@ -16,7 +16,7 @@ export default function FileComponent({file, style}: IFileProps) {
 
     return (
         <div
-            className="flex items-center space-x-2 pl-1 hover:underline hover:cursor-pointer"
+            className="flex items-center space-x-2 pl-4 hover:underline hover:cursor-pointer"
             style={style}
             onClick={requestFullscreen}
         >

@@ -1,23 +1,21 @@
-import {CSSProperties, useState} from "react";
+import {CSSProperties, Dispatch, SetStateAction} from "react";
 import {IDirectory} from "@/types/directory";
 import {FaFolder, FaFolderOpen} from "react-icons/fa6";
 import FilesComponent from "@/components/FilesComponent.tsx";
 
 interface IDirectoryProps {
-    parentCount: number;
+    depth: number;
+    isOpen: boolean;
+    setIsOpen: Dispatch<SetStateAction<boolean>>;
     directory: IDirectory;
 }
 
-const DEFAULT_LEFT_PADDING = 1;
-
-function Directory({parentCount, directory}: IDirectoryProps) {
-    const [isOpen, setIsOpen] = useState(false);
-
+function Directory({depth, isOpen, setIsOpen, directory}: IDirectoryProps) {
     if (!directory.isVisible) {
         return null;
     }
 
-    const paddingLeftString = (parentCount * DEFAULT_LEFT_PADDING).toString();
+    const paddingLeftString = depth.toString();
     const directoryStyle: CSSProperties = {paddingLeft: `${paddingLeftString}rem`};
 
     function onClick() {
@@ -42,7 +40,7 @@ function Directory({parentCount, directory}: IDirectoryProps) {
                 <span>{directory.name}</span>
             </div>
 
-            {isOpen && <FilesComponent parentCount={parentCount} files={directory.pdfFiles}/>}
+            {isOpen && <FilesComponent files={directory.pdfFiles}/>}
         </li>
     );
 }

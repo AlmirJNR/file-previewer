@@ -8,3 +8,8 @@ export interface IDirectory {
     hasFiles: boolean;
     pdfFiles: IDirectoryFile[]
 }
+
+export interface IDirectoryTree {
+    directory: IDirectory;
+    directories: IDirectoryTree[];
+}
