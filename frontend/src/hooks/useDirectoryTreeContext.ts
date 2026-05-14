@@ -1,5 +1,5 @@
-import {use} from "react";
-import {DirectoryTreeContext} from "@/contexts/directoryTreeContext.ts";
+import { use } from 'react';
+import { DirectoryTreeContext } from '@/contexts/directoryTreeContext.ts';
 
 function useDirectoryTreeContext() {
     const context = use(DirectoryTreeContext);

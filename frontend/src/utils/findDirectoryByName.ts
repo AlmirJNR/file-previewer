@@ -1,4 +1,4 @@
-import {IDirectoryTree} from "@/types/directory";
+import { IDirectoryTree } from '@/types/directory';
 
 function findDirectoryByName(directoryTree: IDirectoryTree, name: string): IDirectoryTree | null {
     if (directoryTree.directory.name === name) {
@@ -13,4 +13,4 @@ function findDirectoryByName(directoryTree: IDirectoryTree, name: string): IDire
     return target;
 }
 
-export {findDirectoryByName};
+export { findDirectoryByName };

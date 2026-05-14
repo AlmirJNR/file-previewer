@@ -1,6 +1,6 @@
-import {IDirectoryTree} from "@/types/directory";
+import { IDirectoryTree } from '@/types/directory';
 
-function directoryHasFiles({directory, directories}: IDirectoryTree) {
+function directoryHasFiles({ directory, directories }: IDirectoryTree) {
     if (directory.hasFiles) {
         return true;
     }
@@ -12,4 +12,4 @@ function directoryHasFiles({directory, directories}: IDirectoryTree) {
     return false;
 }
 
-export {directoryHasFiles};
+export { directoryHasFiles };

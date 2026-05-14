@@ -1,4 +1,4 @@
-import {createContext, Dispatch, SetStateAction} from "react";
+import { Dispatch, SetStateAction, createContext } from 'react';
 
 interface ITitleContext {
     isVisible: boolean;
@@ -9,4 +9,4 @@ interface ITitleContext {
 
 export const TitleContext = createContext<ITitleContext | null>(null);
 
-export type {ITitleContext};
+export type { ITitleContext };

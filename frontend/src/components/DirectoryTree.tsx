@@ -1,6 +1,6 @@
-import {IDirectoryTree} from "@/types/directory";
-import Directory from "@/components/Directory.tsx";
-import {Activity, useState} from "react";
+import { Activity, useState } from 'react';
+import Directory from '@/components/Directory.tsx';
+import { IDirectoryTree } from '@/types/directory';
 
 interface IDirectoryTreeProps {
     depth: number;
@@ -8,19 +8,31 @@ interface IDirectoryTreeProps {
     directoryTree: IDirectoryTree;
 }
 
-export default function DirectoryTree({depth, initialIsOpen, directoryTree}: IDirectoryTreeProps) {
+export default function DirectoryTree({
+    depth,
+    initialIsOpen,
+    directoryTree,
+}: IDirectoryTreeProps) {
     const [isOpen, setIsOpen] = useState(initialIsOpen);
 
     return (
         <>
-            <Directory depth={depth} isOpen={isOpen} setIsOpen={setIsOpen} directoryTree={directoryTree}/>
+            <Directory
+                depth={depth}
+                isOpen={isOpen}
+                setIsOpen={setIsOpen}
+                directoryTree={directoryTree}
+            />
 
             <Activity mode={isOpen ? 'visible' : 'hidden'}>
-                {directoryTree.directories.map((directoryTree) =>
-                    <DirectoryTree key={directoryTree.directory.id}
-                                   initialIsOpen={false}
-                                   depth={depth + 1}
-                                   directoryTree={directoryTree}/>)}
+                {directoryTree.directories.map(directoryTree => (
+                    <DirectoryTree
+                        key={directoryTree.directory.id}
+                        initialIsOpen={false}
+                        depth={depth + 1}
+                        directoryTree={directoryTree}
+                    />
+                ))}
             </Activity>
         </>
     );

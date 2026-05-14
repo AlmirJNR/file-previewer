@@ -1,4 +1,4 @@
-import {IDirectoryFile} from "./directoryFile";
+import { IDirectoryFile } from './directoryFile';
 
 export interface IDirectory {
     id: string;
@@ -6,7 +6,7 @@ export interface IDirectory {
     name: string;
     isVisible: boolean;
     hasFiles: boolean;
-    pdfFiles: IDirectoryFile[]
+    pdfFiles: IDirectoryFile[];
 }
 
 export interface IDirectoryTree {

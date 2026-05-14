@@ -1,12 +1,12 @@
-import js from '@eslint/js'
-import globals from 'globals'
-import reactRefresh from 'eslint-plugin-react-refresh'
-import tseslint from 'typescript-eslint'
-import {default as reactX} from "eslint-plugin-react-x";
-import {default as reactDom} from "eslint-plugin-react-dom";
+import js from '@eslint/js';
+import { default as reactDom } from 'eslint-plugin-react-dom';
+import reactRefresh from 'eslint-plugin-react-refresh';
+import { default as reactX } from 'eslint-plugin-react-x';
+import globals from 'globals';
+import tseslint from 'typescript-eslint';
 
 export default tseslint.config(
-    {ignores: ['dist']},
+    { ignores: ['dist'] },
     {
         extends: [
             js.configs.recommended,
@@ -28,12 +28,9 @@ export default tseslint.config(
             'react-dom': reactDom,
         },
         rules: {
-            'react-refresh/only-export-components': [
-                'warn',
-                {allowConstantExport: true},
-            ],
+            'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
             ...reactX.configs['recommended-typescript'].rules,
             ...reactDom.configs.recommended.rules,
         },
-    },
-)
+    }
+);

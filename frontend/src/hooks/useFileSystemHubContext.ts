@@ -1,5 +1,5 @@
-import {use} from "react";
-import {FileSystemHubContext} from "@/contexts/fileSystemHubContext.ts";
+import { use } from 'react';
+import { FileSystemHubContext } from '@/contexts/fileSystemHubContext.ts';
 
 function useFileSystemHubContext() {
     const context = use(FileSystemHubContext);
@@ -10,4 +10,4 @@ function useFileSystemHubContext() {
     return context;
 }
 
-export {useFileSystemHubContext};
+export { useFileSystemHubContext };

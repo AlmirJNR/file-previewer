@@ -1,10 +1,10 @@
-import {FaSpinner} from "react-icons/fa6";
+import { FaSpinner } from 'react-icons/fa6';
 
 export default function Loading() {
     return (
-        <div className="flex justify-center items-center gap-2">
+        <div className="flex items-center justify-center gap-2">
             <span>Carregando</span>
-            <FaSpinner className="animate-spin"/>
+            <FaSpinner className="animate-spin" />
         </div>
     );
 }

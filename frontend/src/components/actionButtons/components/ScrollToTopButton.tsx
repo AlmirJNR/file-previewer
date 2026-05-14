@@ -1,11 +1,11 @@
-import {FaArrowUp} from "react-icons/fa6";
-import {Activity, useEffect, useState} from "react";
+import { Activity, useEffect, useState } from 'react';
+import { FaArrowUp } from 'react-icons/fa6';
 
 export default function ScrollToTopButton() {
     const [isVisible, setIsVisible] = useState(false);
 
     function handleClick() {
-        window.scroll({top: 0, behavior: 'smooth'});
+        window.scroll({ top: 0, behavior: 'smooth' });
     }
 
     useEffect(() => {
@@ -16,24 +16,21 @@ export default function ScrollToTopButton() {
             setIsVisible(isBelowMiddle);
         };
 
-        window.addEventListener("scrollend", onScrollEnd);
+        window.addEventListener('scrollend', onScrollEnd);
         return () => {
-            window.removeEventListener("scrollend", onScrollEnd);
-        }
+            window.removeEventListener('scrollend', onScrollEnd);
+        };
     }, []);
 
     return (
         <Activity mode={isVisible ? 'visible' : 'hidden'}>
-            <button type="button"
-                    onClick={handleClick}
-                    className="
-                        flex justify-evenly items-center gap-2
-                        bg-cyan-800 rounded-full p-2 group
-                        hover:bg-white hover:cursor-pointer
-                    "
+            <button
+                type="button"
+                onClick={handleClick}
+                className={`group flex items-center justify-evenly gap-2 rounded-full bg-cyan-800 p-2 hover:cursor-pointer hover:bg-white`}
             >
-                <FaArrowUp className="fill-white group-hover:fill-cyan-800"/>
-                <span className="text-white group-hover:text-cyan-800 text-xs">Ir para o topo</span>
+                <FaArrowUp className="fill-white group-hover:fill-cyan-800" />
+                <span className="text-xs text-white group-hover:text-cyan-800">Ir para o topo</span>
             </button>
         </Activity>
     );

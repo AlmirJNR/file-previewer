@@ -1,10 +1,10 @@
-import {useEffect, useState} from "react";
+import { useEffect, useState } from 'react';
 
 interface IUseFileDescriptionProps {
     filePath: string;
 }
 
-function useFileDescription({filePath}: IUseFileDescriptionProps) {
+function useFileDescription({ filePath }: IUseFileDescriptionProps) {
     const key = `fileDescription:${filePath}`;
 
     const [fileDescription, setFileDescription] = useState(() => localStorage.getItem(key) ?? '');
@@ -17,13 +17,13 @@ function useFileDescription({filePath}: IUseFileDescriptionProps) {
     useEffect(() => {
         return () => {
             localStorage.removeItem(key);
-        }
+        };
     }, [key]);
 
     return {
         fileDescription,
-        setFileDescription
-    }
+        setFileDescription,
+    };
 }
 
-export {useFileDescription};
+export { useFileDescription };

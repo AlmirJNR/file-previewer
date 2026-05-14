@@ -1,8 +1,8 @@
-import {PropsWithChildren, useMemo, useState} from "react";
-import {IDirectoryTree} from "@/types/directory";
-import {DirectoryTreeContext, IDirectoryTreeContext} from "@/contexts/directoryTreeContext.ts";
+import { PropsWithChildren, useMemo, useState } from 'react';
+import { DirectoryTreeContext, IDirectoryTreeContext } from '@/contexts/directoryTreeContext.ts';
+import { IDirectoryTree } from '@/types/directory';
 
-function DirectoryTreeProvider({children}: PropsWithChildren) {
+function DirectoryTreeProvider({ children }: PropsWithChildren) {
     const [directoryTree, setDirectoryTree] = useState<IDirectoryTree | null>(null);
     const [isLoadingDirectoryTree, setIsLoadingDirectoryTree] = useState(true);
 
@@ -11,11 +11,11 @@ function DirectoryTreeProvider({children}: PropsWithChildren) {
             directoryTree,
             setDirectoryTree,
             isLoadingDirectoryTree,
-            setIsLoadingDirectoryTree
-        }
+            setIsLoadingDirectoryTree,
+        };
     }, [directoryTree, isLoadingDirectoryTree]);
 
-    return <DirectoryTreeContext value={directoriesContextValue}>{children}</DirectoryTreeContext>
+    return <DirectoryTreeContext value={directoriesContextValue}>{children}</DirectoryTreeContext>;
 }
 
 export default DirectoryTreeProvider;

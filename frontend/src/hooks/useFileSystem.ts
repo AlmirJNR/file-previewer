@@ -1,23 +1,26 @@
-import {useEffect, useState} from "react";
-
-import {useFileSystemHubContext} from "@/hooks/useFileSystemHubContext.ts";
-import {useDirectoryTreeContext} from "@/hooks/useDirectoryTreeContext.ts";
-import {getDirectoryTree} from "@/services/directoriesService.ts";
-import {HubConnectionState} from "@microsoft/signalr";
+import { useEffect, useState } from 'react';
+import { HubConnectionState } from '@microsoft/signalr';
+import { getDirectoryTree } from '@/services/directoriesService.ts';
+import { useDirectoryTreeContext } from '@/hooks/useDirectoryTreeContext.ts';
+import { useFileSystemHubContext } from '@/hooks/useFileSystemHubContext.ts';
 
 function useFileSystem() {
     const fileSystemHub = useFileSystemHubContext();
-    const {setDirectoryTree, setIsLoadingDirectoryTree} = useDirectoryTreeContext();
+    const { setDirectoryTree, setIsLoadingDirectoryTree } = useDirectoryTreeContext();
     const [isConnecting, setIsConnecting] = useState(true);
 
     useEffect(() => {
         async function onEffect() {
-            const startFileSystemHub = fileSystemHub.state === HubConnectionState.Disconnected
-                ? () => fileSystemHub.start()
-                : () => Promise.resolve();
+            const startFileSystemHub =
+                fileSystemHub.state === HubConnectionState.Disconnected
+                    ? () => fileSystemHub.start()
+                    : () => Promise.resolve();
 
             try {
-                const [, directories] = await Promise.all([startFileSystemHub(), getDirectoryTree()]);
+                const [, directories] = await Promise.all([
+                    startFileSystemHub(),
+                    getDirectoryTree(),
+                ]);
                 setDirectoryTree(directories);
             } catch (e) {
                 console.error(e);
@@ -26,7 +29,7 @@ function useFileSystem() {
             }
         }
 
-        fileSystemHub.on("Changed", async () => {
+        fileSystemHub.on('Changed', async () => {
             setIsLoadingDirectoryTree(true);
 
             try {
@@ -42,7 +45,10 @@ function useFileSystem() {
         void onEffect();
 
         return () => {
-            if (fileSystemHub.state !== HubConnectionState.Connecting && fileSystemHub.state !== HubConnectionState.Reconnecting) {
+            if (
+                fileSystemHub.state !== HubConnectionState.Connecting &&
+                fileSystemHub.state !== HubConnectionState.Reconnecting
+            ) {
                 void fileSystemHub.stop();
             }
         };
@@ -53,4 +59,4 @@ function useFileSystem() {
     };
 }
 
-export {useFileSystem};
+export { useFileSystem };

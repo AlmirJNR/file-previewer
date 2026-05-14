@@ -1,8 +1,8 @@
-import {MouseEvent, useEffect, useRef} from "react";
-import {useDirectoryTreeContext} from "@/hooks/useDirectoryTreeContext.ts";
+import { MouseEvent, useEffect, useRef } from 'react';
+import { useDirectoryTreeContext } from '@/hooks/useDirectoryTreeContext.ts';
 
 function useFile() {
-    const {directoryTree} = useDirectoryTreeContext();
+    const { directoryTree } = useDirectoryTreeContext();
     const embedRef = useRef<HTMLEmbedElement>(null);
 
     function onFullscreenChange() {
@@ -11,7 +11,7 @@ function useFile() {
             return;
         }
 
-        ref.className = document.fullscreenElement ? "visible" : "hidden";
+        ref.className = document.fullscreenElement ? 'visible' : 'hidden';
     }
 
     function requestFullscreen(event: MouseEvent<HTMLElement>) {
@@ -21,11 +21,11 @@ function useFile() {
 
     useEffect(() => {
         const ref = embedRef.current;
-        ref?.addEventListener("fullscreenchange", onFullscreenChange);
-        return () => ref?.removeEventListener("fullscreenchange", onFullscreenChange);
+        ref?.addEventListener('fullscreenchange', onFullscreenChange);
+        return () => ref?.removeEventListener('fullscreenchange', onFullscreenChange);
     }, [directoryTree]);
 
-    return {embedRef, requestFullscreen};
+    return { embedRef, requestFullscreen };
 }
 
-export {useFile};
+export { useFile };
