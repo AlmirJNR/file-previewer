@@ -11,6 +11,21 @@ function useFileSystem() {
     const [isConnecting, setIsConnecting] = useState(true);
 
     useEffect(() => {
+        async function onEffect() {
+            const startFileSystemHub = fileSystemHub.state === HubConnectionState.Disconnected
+                ? () => fileSystemHub.start()
+                : () => Promise.resolve();
+
+            try {
+                const [, directories] = await Promise.all([startFileSystemHub(), getDirectoryTree()]);
+                setDirectoryTree(directories);
+            } catch (e) {
+                console.error(e);
+            } finally {
+                setIsConnecting(false);
+            }
+        }
+
         fileSystemHub.on("Changed", async () => {
             setIsLoadingDirectoryTree(true);
 
@@ -31,21 +46,6 @@ function useFileSystem() {
                 void fileSystemHub.stop();
             }
         };
-
-        async function onEffect() {
-            const startFileSystemHub = fileSystemHub.state === HubConnectionState.Disconnected
-                ? () => fileSystemHub.start()
-                : () => Promise.resolve();
-
-            try {
-                const [, directories] = await Promise.all([startFileSystemHub(), getDirectoryTree()]);
-                setDirectoryTree(directories);
-            } catch (e) {
-                console.error(e);
-            } finally {
-                setIsConnecting(false);
-            }
-        }
     }, [fileSystemHub, setIsLoadingDirectoryTree, setDirectoryTree]);
 
     return {

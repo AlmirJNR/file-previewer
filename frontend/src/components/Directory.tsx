@@ -1,16 +1,19 @@
-import {CSSProperties, Dispatch, SetStateAction} from "react";
-import {IDirectory} from "@/types/directory";
+import {Activity, CSSProperties, Dispatch, SetStateAction} from "react";
+import {IDirectoryTree} from "@/types/directory";
 import {FaFolder, FaFolderOpen} from "react-icons/fa6";
 import FilesComponent from "@/components/FilesComponent.tsx";
+import {directoryHasFiles} from "@/utils/directoryHasFiles.ts";
 
 interface IDirectoryProps {
     depth: number;
     isOpen: boolean;
     setIsOpen: Dispatch<SetStateAction<boolean>>;
-    directory: IDirectory;
+    directoryTree: IDirectoryTree;
 }
 
-function Directory({depth, isOpen, setIsOpen, directory}: IDirectoryProps) {
+function Directory({depth, isOpen, setIsOpen, directoryTree}: IDirectoryProps) {
+    const {directory} = directoryTree;
+
     if (!directory.isVisible) {
         return null;
     }
@@ -22,10 +25,10 @@ function Directory({depth, isOpen, setIsOpen, directory}: IDirectoryProps) {
         setIsOpen((prevState) => !prevState);
     }
 
-    if (!directory.hasFiles) {
+    if (!directoryHasFiles(directoryTree)) {
         return (
             <li key={directory.id} style={directoryStyle}>
-                <div className={'flex items-center space-x-2 opacity-50'}>
+                <div className={'flex items-center gap-2 opacity-50'}>
                     <FaFolder/>
                     <span>{directory.name}</span>
                 </div>
@@ -35,12 +38,14 @@ function Directory({depth, isOpen, setIsOpen, directory}: IDirectoryProps) {
 
     return (
         <li key={directory.id} style={directoryStyle} onClick={onClick}>
-            <div className={'flex items-center space-x-2 hover:cursor-pointer hover:underline'}>
+            <div className={'flex items-center gap-2 hover:cursor-pointer hover:underline'}>
                 {isOpen ? <FaFolderOpen/> : <FaFolder/>}
                 <span>{directory.name}</span>
             </div>
 
-            {isOpen && <FilesComponent files={directory.pdfFiles}/>}
+            <Activity mode={isOpen ? 'visible' : 'hidden'}>
+                <FilesComponent files={directory.pdfFiles}/>
+            </Activity>
         </li>
     );
 }

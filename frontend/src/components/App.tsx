@@ -4,6 +4,7 @@ import DirectoryTree from "@/components/DirectoryTree.tsx";
 import {useFileSystem} from "@/hooks/useFileSystem.ts";
 import {useDirectoryTreeContext} from "@/hooks/useDirectoryTreeContext.ts";
 import Warning from "@/components/Warning.tsx";
+import Title from "@/components/Title.tsx";
 
 export default function App() {
     const {isConnecting} = useFileSystem();
@@ -26,7 +27,8 @@ export default function App() {
     }
 
     return (
-        <main className="m-4 p-4 rounded shadow-lg shadow-gray-200 space-y-4">
+        <main className="flex flex-col m-4 p-4 rounded shadow-lg shadow-gray-200 gap-2">
+            <Title/>
             <ul>
                 <DirectoryTree depth={-1} initialIsOpen directoryTree={directoryTree}/>
             </ul>

@@ -5,6 +5,7 @@ import App from './components/App.tsx';
 import {IconContext} from "react-icons";
 import FileSystemHubProvider from "@/contexts/FileSystemHubProvider.tsx";
 import DirectoryTreeProvider from "@/contexts/DirectoryTreeProvider.tsx";
+import TitleProvider from "@/contexts/TitleProvider.tsx";
 
 const root = document.getElementById('root');
 if (!root) {
@@ -16,7 +17,9 @@ createRoot(root).render(
         <IconContext value={{className: 'fill-cyan-800', size: '0.8em'}}>
             <FileSystemHubProvider>
                 <DirectoryTreeProvider>
-                    <App/>
+                    <TitleProvider>
+                        <App/>
+                    </TitleProvider>
                 </DirectoryTreeProvider>
             </FileSystemHubProvider>
         </IconContext>
